@@ -2,8 +2,8 @@ name: Collect PUBG Erangel Circle Data
 
 on:
   schedule:
-    # 02:00 KST every day.
-    - cron: "0 17 * * *"
+    # 02:00, 08:00, 14:00, 20:00 KST every day.
+    - cron: "0 17,23,5,11 * * *"
   workflow_dispatch:
     inputs:
       target_new:
@@ -72,7 +72,7 @@ jobs:
           PUBG_API_KEY: ${{ secrets.PUBG_API_KEY }}
           PUBG_REQUESTS_PER_MINUTE: "10"
           PUBG_CACHE_RAW: "false"
-          TARGET_NEW: ${{ github.event.inputs.target_new || '1000' }}
+          TARGET_NEW: ${{ github.event.inputs.target_new || '300' }}
           DAYS: ${{ github.event.inputs.days || '14' }}
           MIN_CIRCLES: ${{ github.event.inputs.min_circles || '2' }}
           STRICT_FULL_SEQUENCE: ${{ github.event.inputs.strict_full_sequence || 'false' }}
