@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import time
 from pathlib import Path
 from typing import Any
@@ -24,7 +25,13 @@ class RateLimiter:
 
 
 class PubgApiClient:
-    def __init__(self, api_key: str, shard: str = "steam", requests_per_minute: int = 10) -> None:
+    def __init__(
+        self,
+        api_key: str,
+        shard: str = "steam",
+        requests_per_minute: int = 10,
+        cache_raw: bool | None = None,
+    ) -> None:
         if not api_key:
             raise ValueError("PUBG_API_KEY is required. Set it in .env or the environment.")
 
@@ -33,6 +40,7 @@ class PubgApiClient:
         self._base_url = f"https://api.pubg.com/shards/{shard}"
         self._session = requests.Session()
         self._limiter = RateLimiter(requests_per_minute)
+        self._cache_raw = should_cache_raw() if cache_raw is None else cache_raw
 
     def get_samples(self, created_at_start: str | None = None) -> dict[str, Any]:
         params = {}
@@ -43,16 +51,17 @@ class PubgApiClient:
 
     def get_match(self, match_id: str, use_cache: bool = True) -> dict[str, Any]:
         cache_path = RAW_DIR / f"match_{match_id}.json"
-        if use_cache and cache_path.exists():
+        if self._cache_raw and use_cache and cache_path.exists():
             return json.loads(cache_path.read_text(encoding="utf-8"))
 
         payload = self._get_json(f"{self._base_url}/matches/{match_id}", auth=False)
-        cache_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+        if self._cache_raw:
+            cache_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
         return payload
 
     def get_telemetry(self, match_id: str, telemetry_url: str, use_cache: bool = True) -> list[dict[str, Any]]:
         cache_path = RAW_DIR / f"telemetry_{match_id}.json"
-        if use_cache and cache_path.exists():
+        if self._cache_raw and use_cache and cache_path.exists():
             return json.loads(cache_path.read_text(encoding="utf-8"))
 
         self._limiter.wait()
@@ -63,7 +72,8 @@ class PubgApiClient:
         )
         response.raise_for_status()
         payload = response.json()
-        cache_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+        if self._cache_raw:
+            cache_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
         return payload
 
     def _get_json(self, url: str, params: dict[str, str] | None = None, auth: bool = True) -> dict[str, Any]:
@@ -76,3 +86,8 @@ class PubgApiClient:
         response = self._session.get(url, headers=headers, params=params, timeout=30)
         response.raise_for_status()
         return response.json()
+
+
+def should_cache_raw() -> bool:
+    value = os.getenv("PUBG_CACHE_RAW", "true").strip().lower()
+    return value not in {"0", "false", "no", "off"}

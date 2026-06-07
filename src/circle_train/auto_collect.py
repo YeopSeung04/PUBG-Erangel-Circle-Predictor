@@ -42,6 +42,7 @@ def main() -> int:
     parser.add_argument("--repeat", action="store_true", help="Run forever at the given interval.")
     parser.add_argument("--interval-hours", type=float, default=24.0, help="Repeat interval in hours.")
     parser.add_argument("--no-notify", action="store_true", help="Disable Windows completion notification.")
+    parser.add_argument("--fail-on-errors", action="store_true", help="Return non-zero when sample windows fail.")
     args = parser.parse_args()
 
     if args.strict_full_sequence:
@@ -130,7 +131,9 @@ def run_once(args: argparse.Namespace) -> tuple[int, AutoCollectResult]:
     store.export()
     export_vectors(settings.database_path)
     export_route_summary(settings.database_path)
-    return 0 if result.errors == 0 else 1, result
+    if args.fail_on_errors and result.errors > 0:
+        return 1, result
+    return 0, result
 
 
 def get_recent_sample_starts(days: int) -> list[str]:
