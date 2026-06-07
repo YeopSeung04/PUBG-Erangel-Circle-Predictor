@@ -184,3 +184,11 @@ powershell -ExecutionPolicy Bypass -File scripts\register_daily_task.ps1
 ## 좌표 기준
 
 PUBG 텔레메트리 좌표는 센티미터 단위입니다. 에란겔 X/Y 범위는 대략 `0 ~ 816000`입니다. 이 프로젝트는 원본 좌표를 그대로 저장하고, 분석이나 모델 학습 시 필요한 경우 km 단위로 변환합니다.
+
+<!-- COLLECTION_LOG_START -->
+## 수집 로그
+
+총 수집 데이터: 29개
+
+- 2026/0607: 2개 데이터
+<!-- COLLECTION_LOG_END -->
