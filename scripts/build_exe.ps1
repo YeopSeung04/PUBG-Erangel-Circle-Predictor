@@ -10,4 +10,4 @@ dotnet publish $LauncherProject `
   -p:PublishSingleFile=true `
   -o $OutputDir
 
-Write-Host "Built: $OutputDir\CircleTrainAutoCollector.exe"
+Write-Host "Built: $OutputDir\PUBGErangelCircleCollector.exe"

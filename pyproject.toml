@@ -1,7 +1,7 @@
 [project]
-name = "circle-train"
+name = "pubg-erangel-circle-predictor"
 version = "0.1.0"
-description = "PUBG Erangel plane-route and circle-sequence data collector."
+description = "PUBG Erangel plane-route and circle prediction data collector."
 requires-python = ">=3.10"
 dependencies = [
     "python-dotenv>=1.0.1",
@@ -9,9 +9,9 @@ dependencies = [
 ]
 
 [project.scripts]
-circle-train = "circle_train.collector:main"
-circle-train-analyze = "circle_train.analysis:main"
-circle-train-auto = "circle_train.auto_collect:main"
+pubg-circle-collect = "circle_train.collector:main"
+pubg-circle-analyze = "circle_train.analysis:main"
+pubg-circle-auto = "circle_train.auto_collect:main"
 
 [build-system]
 requires = ["setuptools>=68"]

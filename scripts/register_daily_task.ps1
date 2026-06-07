@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 $ProjectRoot = Split-Path -Parent $PSScriptRoot
-$ExePath = Join-Path $ProjectRoot "dist\CircleTrainAutoCollector.exe"
+$ExePath = Join-Path $ProjectRoot "dist\PUBGErangelCircleCollector.exe"
 
 if (-not (Test-Path $ExePath)) {
   throw "Build the exe first: scripts\build_exe.ps1"
@@ -11,11 +11,11 @@ $Trigger = New-ScheduledTaskTrigger -Daily -At 2:00AM
 $Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
 
 Register-ScheduledTask `
-  -TaskName "CircleTrainDailyCollector" `
+  -TaskName "PUBGErangelCircleDailyCollector" `
   -Action $Action `
   -Trigger $Trigger `
   -Settings $Settings `
-  -Description "Collect PUBG Erangel plane route and circle data daily." `
+  -Description "Collect PUBG Erangel plane route and circle prediction data daily." `
   -Force
 
-Write-Host "Registered daily task: CircleTrainDailyCollector"
+Write-Host "Registered daily task: PUBGErangelCircleDailyCollector"

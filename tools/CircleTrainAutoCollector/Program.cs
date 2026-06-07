@@ -19,7 +19,7 @@ internal static class Program
         var projectRoot = FindProjectRoot(AppContext.BaseDirectory);
         if (projectRoot is null)
         {
-            ShowMessage("Circle Train", "Could not find Circle Train project root.");
+            ShowMessage("PUBG Erangel Circle Predictor", "Could not find project root.");
             return 1;
         }
 
@@ -47,12 +47,12 @@ internal static class Program
             process.WaitForExit();
 
             var status = process.ExitCode == 0 ? "finished" : $"finished with errors ({process.ExitCode})";
-            ShowMessage("Circle Train", $"Auto collection {status}.\n\nProject: {projectRoot}");
+            ShowMessage("PUBG Erangel Circle Predictor", $"Auto collection {status}.\n\nProject: {projectRoot}");
             return process.ExitCode;
         }
         catch (Exception ex)
         {
-            ShowMessage("Circle Train", $"Auto collection failed.\n\n{ex.Message}");
+            ShowMessage("PUBG Erangel Circle Predictor", $"Auto collection failed.\n\n{ex.Message}");
             return 1;
         }
     }

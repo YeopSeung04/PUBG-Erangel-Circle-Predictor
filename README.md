@@ -1,4 +1,4 @@
-# Circle Train
+# PUBG Erangel Circle Predictor
 
 PUBG 에란겔 경기의 비행기 경로와 1~9페이즈 자기장 시퀀스를 수집하는 1차 데이터셋 구축 프로젝트입니다.
 

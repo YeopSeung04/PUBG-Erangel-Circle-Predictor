@@ -1,4 +1,4 @@
-# Collection Plan
+# PUBG Erangel Circle Prediction Collection Plan
 
 ## Why 40,000 Matches Matter
 

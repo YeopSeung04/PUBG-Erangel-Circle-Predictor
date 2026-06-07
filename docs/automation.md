@@ -2,7 +2,7 @@
 
 ## Files
 
-- `dist/CircleTrainAutoCollector.exe`
+- `dist/PUBGErangelCircleCollector.exe`
   - Double-click launcher.
   - Runs one automated collection pass.
   - Shows a Windows message box when the run finishes.
@@ -40,7 +40,7 @@ This means:
 Use this when you want only full 9-phase matches:
 
 ```powershell
-dist\CircleTrainAutoCollector.exe --target-new 100 --days 14 --shards steam,kakao --strict-full-sequence --no-notify
+dist\PUBGErangelCircleCollector.exe --target-new 100 --days 14 --shards steam,kakao --strict-full-sequence --no-notify
 ```
 
 ## Register Daily Collection
