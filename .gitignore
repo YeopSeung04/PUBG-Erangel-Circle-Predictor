@@ -1,0 +1,13 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+*.pdb
+data/raw/*.json
+data/raw/*.json.gz
+data/processed/*.csv
+data/*.sqlite
+data/*.db
+tools/**/bin/
+tools/**/obj/

@@ -1,0 +1,24 @@
+[project]
+name = "circle-train"
+version = "0.1.0"
+description = "PUBG Erangel plane-route and circle-sequence data collector."
+requires-python = ">=3.10"
+dependencies = [
+    "python-dotenv>=1.0.1",
+    "requests>=2.32.0",
+]
+
+[project.scripts]
+circle-train = "circle_train.collector:main"
+circle-train-analyze = "circle_train.analysis:main"
+circle-train-auto = "circle_train.auto_collect:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
