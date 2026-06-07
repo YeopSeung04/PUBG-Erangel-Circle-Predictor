@@ -6,8 +6,7 @@ __pycache__/
 *.pdb
 data/raw/*.json
 data/raw/*.json.gz
-data/processed/*.csv
-data/*.sqlite
-data/*.db
+data/raw/*
+!data/raw/.gitkeep
 tools/**/bin/
 tools/**/obj/

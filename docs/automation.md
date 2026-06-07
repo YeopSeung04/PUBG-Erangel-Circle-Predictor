@@ -2,6 +2,11 @@
 
 ## Files
 
+- `.github/workflows/collect-data.yml`
+  - GitHub Actions daily collector.
+  - Runs every day at 02:00 KST.
+  - Commits `data/circle_train.sqlite` and `data/processed/*.csv` back to the private repository.
+
 - `dist/PUBGErangelCircleCollector.exe`
   - Double-click launcher.
   - Runs one automated collection pass.
@@ -34,6 +39,37 @@ This means:
 - export CSV files
 - export phase vector and route summary analysis
 - show final Windows alert from the launcher
+
+## GitHub Actions
+
+The repository includes a scheduled workflow:
+
+```text
+.github/workflows/collect-data.yml
+```
+
+Required repository secret:
+
+```text
+PUBG_API_KEY
+```
+
+The workflow:
+
+- runs daily at 02:00 KST
+- can be started manually with `workflow_dispatch`
+- scans `steam,kakao`
+- requires inferred plane route
+- uses `min_circles=2` by default for transition training data
+- keeps raw telemetry out of git
+- commits the cumulative SQLite database and CSV exports
+
+Stored outputs:
+
+```text
+data/circle_train.sqlite
+data/processed/*.csv
+```
 
 ## Strict P1-P9 Mode
 

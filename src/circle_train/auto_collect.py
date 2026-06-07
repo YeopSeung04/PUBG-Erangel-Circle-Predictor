@@ -30,7 +30,7 @@ class AutoCollectResult:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run automated Circle Train data collection.")
+    parser = argparse.ArgumentParser(description="Run automated PUBG Erangel circle data collection.")
     parser.add_argument("--database", default=None, help="SQLite database path.")
     parser.add_argument("--target-new", type=int, default=1000, help="Stop after this many newly saved matches.")
     parser.add_argument("--days", type=int, default=14, help="Recent UTC sample days to scan.")
@@ -53,7 +53,7 @@ def main() -> int:
         elapsed = datetime.now() - started_at
 
         message = (
-            "Circle Train collection finished.\n\n"
+            "PUBG Erangel circle collection finished.\n\n"
             f"Saved new matches: {result.saved}\n"
             f"Scanned matches: {result.scanned}\n"
             f"Already saved: {result.already_saved}\n"
@@ -64,7 +64,7 @@ def main() -> int:
 
         print(message)
         if not args.no_notify:
-            notify("Circle Train", message)
+            notify("PUBG Erangel Circle Predictor", message)
 
         if not args.repeat:
             return exit_code

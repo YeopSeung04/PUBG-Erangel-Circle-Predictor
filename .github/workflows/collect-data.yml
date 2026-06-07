@@ -1,0 +1,92 @@
+name: Collect PUBG Erangel Circle Data
+
+on:
+  schedule:
+    # 02:00 KST every day.
+    - cron: "0 17 * * *"
+  workflow_dispatch:
+    inputs:
+      target_new:
+        description: "Maximum newly saved matches"
+        required: false
+        default: "1000"
+      days:
+        description: "Recent UTC sample days to scan"
+        required: false
+        default: "14"
+      min_circles:
+        description: "Minimum circle phases required"
+        required: false
+        default: "2"
+      strict_full_sequence:
+        description: "Require all 9 circle phases"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pubg-erangel-circle-collection
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install collector
+        run: pip install -e .
+
+      - name: Collect data
+        env:
+          PUBG_API_KEY: ${{ secrets.PUBG_API_KEY }}
+          PUBG_REQUESTS_PER_MINUTE: "10"
+          TARGET_NEW: ${{ github.event.inputs.target_new || '1000' }}
+          DAYS: ${{ github.event.inputs.days || '14' }}
+          MIN_CIRCLES: ${{ github.event.inputs.min_circles || '2' }}
+          STRICT_FULL_SEQUENCE: ${{ github.event.inputs.strict_full_sequence || 'false' }}
+        run: |
+          if [ -z "$PUBG_API_KEY" ]; then
+            echo "PUBG_API_KEY secret is required."
+            exit 1
+          fi
+
+          STRICT_FLAG=""
+          if [ "$STRICT_FULL_SEQUENCE" = "true" ]; then
+            STRICT_FLAG="--strict-full-sequence"
+          fi
+
+          python -m circle_train.auto_collect \
+            --target-new "$TARGET_NEW" \
+            --days "$DAYS" \
+            --shards steam,kakao \
+            --min-circles "$MIN_CIRCLES" \
+            $STRICT_FLAG \
+            --no-notify
+
+      - name: Commit collected data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/circle_train.sqlite data/processed/*.csv
+
+          if git diff --cached --quiet; then
+            echo "No new collected data to commit."
+            exit 0
+          fi
+
+          git commit -m "Collect PUBG Erangel circle data"
+          git push
