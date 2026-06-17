@@ -1,0 +1,10 @@
+﻿{
+  "name": "PUBG Erangel official map image and reference-registered visualization map",
+  "source_page": "https://pubg.com/en/game-info/maps/erangel",
+  "source_asset": "https://wstatic-prod.pubg.com/web/live/main_4d83b2d/img/590dba7.webp",
+  "retrieved_at": "2026-06-15",
+  "official_clean_map": "data/assets/erangel_official_map.webp",
+  "registered_map": "data/assets/erangel_registered_to_reference.png",
+  "registered_reference": "C:/Users/hanse/AppData/Local/Temp/codex-clipboard-834facab-3af7-4744-9b9e-0fd016702ec5.png",
+  "notes": "The registered map is the clean official Erangel map warped into the same pixel coordinate space as the user's real map screenshot containing the actual plane route and phase 1 circle. PUBG and Erangel assets are owned by KRAFTON/PUBG."
+}

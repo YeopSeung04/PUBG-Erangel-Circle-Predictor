@@ -4,14 +4,19 @@ version = "0.1.0"
 description = "PUBG Erangel plane-route and circle prediction data collector."
 requires-python = ">=3.10"
 dependencies = [
+    "Pillow>=10.0.0",
     "python-dotenv>=1.0.1",
     "requests>=2.32.0",
+    "scikit-learn>=1.4.0",
 ]
 
 [project.scripts]
 pubg-circle-collect = "circle_train.collector:main"
 pubg-circle-analyze = "circle_train.analysis:main"
 pubg-circle-auto = "circle_train.auto_collect:main"
+pubg-circle-train = "circle_train.train:main"
+pubg-circle-predict = "circle_train.predict:main"
+pubg-circle-visualize = "circle_train.visualize:main"
 
 [build-system]
 requires = ["setuptools>=68"]

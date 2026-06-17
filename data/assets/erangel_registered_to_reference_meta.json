@@ -1,0 +1,61 @@
+{
+  "reference_image": "C:\\Users\\hanse\\AppData\\Local\\Temp\\codex-clipboard-834facab-3af7-4744-9b9e-0fd016702ec5.png",
+  "official_source": "data\\assets\\erangel_official_map.webp",
+  "registered_map": "data\\assets\\erangel_registered_to_reference.png",
+  "homography_official_to_reference": [
+    [
+      1.0802281168741141,
+      -0.0008364653418798928,
+      -1.0593121657890139
+    ],
+    [
+      0.00020906517371024384,
+      1.078799348156584,
+      0.021951856894115652
+    ],
+    [
+      2.1629997051836997e-07,
+      -1.6647486275064215e-06,
+      1.0
+    ]
+  ],
+  "inliers": 989,
+  "reference_size": [
+    1078,
+    1080
+  ],
+  "extracted_route_pixels": {
+    "start": [
+      103.92464228934817,
+      402.4066772655008
+    ],
+    "end": [
+      948.0251192368838,
+      295.19777424483306
+    ]
+  },
+  "extracted_phase1_circle_pixels": {
+    "center_x": 303.88419836607824,
+    "center_y": 310.86639288706425,
+    "radius": 268.9252709686557
+  },
+  "visual_world_size": 800000,
+  "extracted_route_world_8km": {
+    "start": [
+      77124.03880471108,
+      501920.97980333277
+    ],
+    "end": [
+      703543.6877453683,
+      581334.9820408644
+    ]
+  },
+  "extracted_phase1_circle_world_8km": {
+    "center": [
+      225517.03032733078,
+      569728.597861434
+    ],
+    "radius_x": 199573.4849489096,
+    "radius_y": 199203.90442122644
+  }
+}

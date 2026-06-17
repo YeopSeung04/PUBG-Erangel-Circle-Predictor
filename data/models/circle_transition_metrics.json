@@ -1,0 +1,99 @@
+{
+  "train_rows": 22444,
+  "test_rows": 5664,
+  "train_matches": 3729,
+  "test_matches": 932,
+  "train_center_mae_m": 181.0006476215609,
+  "train_center_rmse_m": 263.2512645059332,
+  "train_radius_mae_m": 0.9241138122754289,
+  "train_radius_rmse_m": 3.8375735123223795,
+  "test_center_mae_m": 205.61146541443642,
+  "test_center_rmse_m": 296.874007506381,
+  "test_radius_mae_m": 0.9089282588778522,
+  "test_radius_rmse_m": 3.817046794459866,
+  "baselines": {
+    "current_center": {
+      "center_mae_m": 205.96179154498716,
+      "center_rmse_m": 297.50069424007313,
+      "radius_mae_m": 324.8410882745372,
+      "radius_rmse_m": 439.37850749349695
+    },
+    "phase_mean_delta": {
+      "center_mae_m": 205.94611284047645,
+      "center_rmse_m": 297.4237997760699,
+      "radius_mae_m": 7.232668695064563,
+      "radius_rmse_m": 15.274453249123834
+    },
+    "phase_route_mean_delta": {
+      "center_mae_m": 206.92965114713158,
+      "center_rmse_m": 299.4894697915162,
+      "radius_mae_m": 6.418821320365261,
+      "radius_rmse_m": 14.443617525977814
+    }
+  },
+  "test_by_phase": {
+    "1": {
+      "center_mae_m": 565.9226872212947,
+      "center_rmse_m": 613.8013798831512,
+      "radius_mae_m": 1.7299652099609376e-05,
+      "radius_rmse_m": 1.7299652099609376e-05
+    },
+    "2": {
+      "center_mae_m": 284.85510365384124,
+      "center_rmse_m": 306.543018636751,
+      "radius_mae_m": 5.245208740234375e-06,
+      "radius_rmse_m": 5.245208740234375e-06
+    },
+    "3": {
+      "center_mae_m": 196.06117124443642,
+      "center_rmse_m": 209.1067729600712,
+      "radius_mae_m": 5.5356402886968965,
+      "radius_rmse_m": 9.419929060105808
+    },
+    "4": {
+      "center_mae_m": 121.13140685596183,
+      "center_rmse_m": 129.12959824902558,
+      "radius_mae_m": 2.013826010943229e-06,
+      "radius_rmse_m": 3.964474531567372e-06
+    },
+    "5": {
+      "center_mae_m": 59.80668607534601,
+      "center_rmse_m": 64.11280456517302,
+      "radius_mae_m": 1.030376493292955e-06,
+      "radius_rmse_m": 2.0734348133300975e-06
+    },
+    "6": {
+      "center_mae_m": 31.792967521761884,
+      "center_rmse_m": 34.25022770282814,
+      "radius_mae_m": 5.498510418516216e-07,
+      "radius_rmse_m": 1.0723602297943313e-06
+    },
+    "7": {
+      "center_mae_m": 14.273811480564397,
+      "center_rmse_m": 15.579815027661946,
+      "radius_mae_m": 2.0109927716032832e-07,
+      "radius_rmse_m": 2.929737868696793e-07
+    },
+    "8": {
+      "center_mae_m": 0.0,
+      "center_rmse_m": 0.0,
+      "radius_mae_m": 1.2728560250252485e-09,
+      "radius_rmse_m": 1.7953632043107338e-09
+    }
+  },
+  "input": "F:\\coding\\PUBG-Erangel-Circle-Predictor\\data\\processed\\match_sequences.csv",
+  "model_output": "F:\\coding\\PUBG-Erangel-Circle-Predictor\\data\\models\\circle_transition_model.pkl",
+  "metrics_output": "F:\\coding\\PUBG-Erangel-Circle-Predictor\\data\\models\\circle_transition_metrics.json",
+  "model_type": "phase_random_forest_displacement",
+  "algorithm": "random-forest",
+  "target_mode": "displacement",
+  "phase_scoped": true,
+  "feature_count": 51,
+  "route_group_count": 33,
+  "ridge_alpha": 0.01,
+  "rf_estimators": 100,
+  "rf_max_depth": 12,
+  "rf_min_samples_leaf": 5,
+  "seed": 42,
+  "test_ratio": 0.2
+}
