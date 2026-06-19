@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PUBG Erangel Circle Training Dashboard</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1120;
+      --panel: #111827;
+      --panel-2: #162033;
+      --line: #25324a;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --green: #34d399;
+      --blue: #60a5fa;
+      --orange: #fb923c;
+      --red: #f87171;
+      --purple: #a78bfa;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top left, #1f3a5f 0, var(--bg) 34rem);
+      color: var(--text);
+      font-family: "Segoe UI", "Noto Sans KR", Arial, sans-serif;
+    }
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 32px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 34px;
+      letter-spacing: -0.04em;
+    }
+    h2 {
+      margin: 0 0 16px;
+      font-size: 20px;
+    }
+    p { color: var(--muted); line-height: 1.6; }
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(17, 24, 39, 0.72);
+      color: var(--muted);
+      font-size: 13px;
+      margin: 4px 4px 0 0;
+      white-space: nowrap;
+    }
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+    .cards {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-bottom: 16px;
+    }
+    .two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .panel {
+      background: linear-gradient(180deg, rgba(22, 32, 51, 0.92), rgba(17, 24, 39, 0.94));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+    }
+    .metric-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    .metric-value {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+    .metric-sub {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .good { color: var(--green); }
+    .bad { color: var(--red); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+    }
+    th:first-child, td:first-child { text-align: left; }
+    th { color: var(--muted); font-weight: 600; }
+    svg { width: 100%; height: auto; display: block; }
+    .note {
+      border-left: 4px solid var(--orange);
+      padding: 12px 14px;
+      background: rgba(251, 146, 60, 0.08);
+      border-radius: 12px;
+      color: #fed7aa;
+      line-height: 1.55;
+    }
+    code {
+      color: #bfdbfe;
+      background: rgba(96, 165, 250, 0.1);
+      padding: 2px 5px;
+      border-radius: 6px;
+    }
+    .map-wrap {
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #020617;
+    }
+    .map-image {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .legend-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 16px;
+    }
+    .legend-dot {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      margin-right: 6px;
+      vertical-align: -1px;
+    }
+    @media (max-width: 900px) {
+      main { padding: 18px; }
+      header { flex-direction: column; }
+      .cards, .two, .three { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <section>
+      <h1>PUBG Erangel Circle Training Dashboard</h1>
+      <p>현재까지 수집한 에란겔 경기 데이터로 학습한 자기장 transition 모델 결과입니다.</p>
+      <span class="pill">generated: 2026-06-19 19:06:52 대한민국 표준시</span>
+      <span class="pill">metrics: F:\coding\PUBG-Erangel-Circle-Predictor\data\models\circle_transition_metrics.json</span>
+      <span class="pill">model: phase_random_forest_displacement</span>
+      <span class="pill">algorithm: random-forest</span>
+      <span class="pill">target: displacement</span>
+    </section>
+  </header>
+
+  <section class="grid cards">
+    
+    <article class="panel">
+      <div class="metric-label">Matches</div>
+      <div class="metric-value">6,093</div>
+      <div class="metric-sub">수집된 경기 수</div>
+    </article>
+    
+    
+    <article class="panel">
+      <div class="metric-label">Transition Rows</div>
+      <div class="metric-value">37,016</div>
+      <div class="metric-sub">학습 가능한 phase 이동 row</div>
+    </article>
+    
+    
+    <article class="panel">
+      <div class="metric-label">Test Center MAE</div>
+      <div class="metric-value">205.48 m</div>
+      <div class="metric-sub"><span class="bad">-0.24 m</span> current-center baseline 대비</div>
+    </article>
+    
+    
+    <article class="panel">
+      <div class="metric-label">Test Radius MAE</div>
+      <div class="metric-value">4.06 m</div>
+      <div class="metric-sub"><span class="good">+314.80 m</span> current-radius baseline 대비</div>
+    </article>
+    
+  </section>
+
+  <section class="grid three">
+    
+    <article class="panel">
+      <div class="metric-label">Train Rows</div>
+      <div class="metric-value">29,525</div>
+      <div class="metric-sub">4,875 matches</div>
+    </article>
+    
+    
+    <article class="panel">
+      <div class="metric-label">Test Rows</div>
+      <div class="metric-value">7,491</div>
+      <div class="metric-sub">1,218 matches</div>
+    </article>
+    
+    
+    <article class="panel">
+      <div class="metric-label">Route Groups</div>
+      <div class="metric-value">33</div>
+      <div class="metric-sub">features: 51</div>
+    </article>
+    
+  </section>
+
+  <section class="grid two" style="margin-top: 16px;">
+    <article class="panel">
+      <h2>Center Error by Phase</h2>
+      
+    <svg viewBox="0 0 860 308" role="img" aria-label="bar chart">
+      
+            <text x="0" y="33" fill="#cbd5e1" font-size="13">P1</text>
+            <rect x="210" y="18" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="18" width="540.00" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="32" fill="#e5e7eb" font-size="12">581.0 m</text>
+            
+            <text x="0" y="67" fill="#cbd5e1" font-size="13">P2</text>
+            <rect x="210" y="52" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="52" width="265.62" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="66" fill="#e5e7eb" font-size="12">285.8 m</text>
+            
+            <text x="0" y="101" fill="#cbd5e1" font-size="13">P3</text>
+            <rect x="210" y="86" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="86" width="183.50" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="100" fill="#e5e7eb" font-size="12">197.4 m</text>
+            
+            <text x="0" y="135" fill="#cbd5e1" font-size="13">P4</text>
+            <rect x="210" y="120" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="120" width="106.57" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="134" fill="#e5e7eb" font-size="12">114.7 m</text>
+            
+            <text x="0" y="169" fill="#cbd5e1" font-size="13">P5</text>
+            <rect x="210" y="154" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="154" width="56.04" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="168" fill="#e5e7eb" font-size="12">60.3 m</text>
+            
+            <text x="0" y="203" fill="#cbd5e1" font-size="13">P6</text>
+            <rect x="210" y="188" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="188" width="30.10" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="202" fill="#e5e7eb" font-size="12">32.4 m</text>
+            
+            <text x="0" y="237" fill="#cbd5e1" font-size="13">P7</text>
+            <rect x="210" y="222" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="222" width="14.72" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="236" fill="#e5e7eb" font-size="12">15.8 m</text>
+            
+            <text x="0" y="271" fill="#cbd5e1" font-size="13">P8</text>
+            <rect x="210" y="256" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="256" width="1.00" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="270" fill="#e5e7eb" font-size="12">0.0 m</text>
+            
+    </svg>
+    
+    </article>
+    <article class="panel">
+      <h2>Radius Error by Phase</h2>
+      
+    <svg viewBox="0 0 860 308" role="img" aria-label="bar chart">
+      
+            <text x="0" y="33" fill="#cbd5e1" font-size="13">P1</text>
+            <rect x="210" y="18" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="18" width="540.00" height="18" rx="8" fill="#34d399" />
+            <text x="762" y="32" fill="#e5e7eb" font-size="12">11.12 m</text>
+            
+            <text x="0" y="67" fill="#cbd5e1" font-size="13">P2</text>
+            <rect x="210" y="52" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="52" width="265.42" height="18" rx="8" fill="#34d399" />
+            <text x="762" y="66" fill="#e5e7eb" font-size="12">5.46 m</text>
+            
+            <text x="0" y="101" fill="#cbd5e1" font-size="13">P3</text>
+            <rect x="210" y="86" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="86" width="305.34" height="18" rx="8" fill="#34d399" />
+            <text x="762" y="100" fill="#e5e7eb" font-size="12">6.29 m</text>
+            
+            <text x="0" y="135" fill="#cbd5e1" font-size="13">P4</text>
+            <rect x="210" y="120" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="120" width="50.99" height="18" rx="8" fill="#34d399" />
+            <text x="762" y="134" fill="#e5e7eb" font-size="12">1.05 m</text>
+            
+            <text x="0" y="169" fill="#cbd5e1" font-size="13">P5</text>
+            <rect x="210" y="154" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="154" width="36.50" height="18" rx="8" fill="#34d399" />
+            <text x="762" y="168" fill="#e5e7eb" font-size="12">0.75 m</text>
+            
+            <text x="0" y="203" fill="#cbd5e1" font-size="13">P6</text>
+            <rect x="210" y="188" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="188" width="23.87" height="18" rx="8" fill="#34d399" />
+            <text x="762" y="202" fill="#e5e7eb" font-size="12">0.49 m</text>
+            
+            <text x="0" y="237" fill="#cbd5e1" font-size="13">P7</text>
+            <rect x="210" y="222" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="222" width="1.00" height="18" rx="8" fill="#34d399" />
+            <text x="762" y="236" fill="#e5e7eb" font-size="12">0.00 m</text>
+            
+            <text x="0" y="271" fill="#cbd5e1" font-size="13">P8</text>
+            <rect x="210" y="256" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="256" width="1.00" height="18" rx="8" fill="#34d399" />
+            <text x="762" y="270" fill="#e5e7eb" font-size="12">0.00 m</text>
+            
+    </svg>
+    
+    </article>
+  </section>
+
+  <section class="grid two" style="margin-top: 16px;">
+    <article class="panel">
+      <h2>Baseline Comparison</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Model / Baseline</th>
+            <th>Center MAE</th>
+            <th>Radius MAE</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+    <tr>
+      <td>Current model</td>
+      <td>205.48 m</td>
+      <td>4.06 m</td>
+    </tr>
+    
+          
+    <tr>
+      <td>Current center/radius</td>
+      <td>205.24 m</td>
+      <td>318.86 m</td>
+    </tr>
+    
+          
+    <tr>
+      <td>Phase mean delta</td>
+      <td>205.22 m</td>
+      <td>14.01 m</td>
+    </tr>
+    
+          
+    <tr>
+      <td>Phase + route mean delta</td>
+      <td>205.89 m</td>
+      <td>13.45 m</td>
+    </tr>
+    
+        </tbody>
+      </table>
+      <p>
+        반경 예측은 단순 현재 반경 유지 대비 314.80m 개선,
+        phase 평균 반경 기준 대비 9.96m 개선입니다.
+        중심점 예측은 아직 baseline과 거의 같은 수준이라 feature/비행기 동선 품질 개선이 필요합니다.
+      </p>
+    </article>
+    <article class="panel">
+      <h2>Transition Rows by Phase</h2>
+      
+    <svg viewBox="0 0 860 308" role="img" aria-label="bar chart">
+      
+            <text x="0" y="33" fill="#cbd5e1" font-size="13">P1</text>
+            <rect x="210" y="18" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="18" width="540.00" height="18" rx="8" fill="#a78bfa" />
+            <text x="762" y="32" fill="#e5e7eb" font-size="12">6,093 rows</text>
+            
+            <text x="0" y="67" fill="#cbd5e1" font-size="13">P2</text>
+            <rect x="210" y="52" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="52" width="539.65" height="18" rx="8" fill="#a78bfa" />
+            <text x="762" y="66" fill="#e5e7eb" font-size="12">6,089 rows</text>
+            
+            <text x="0" y="101" fill="#cbd5e1" font-size="13">P3</text>
+            <rect x="210" y="86" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="86" width="539.20" height="18" rx="8" fill="#a78bfa" />
+            <text x="762" y="100" fill="#e5e7eb" font-size="12">6,084 rows</text>
+            
+            <text x="0" y="135" fill="#cbd5e1" font-size="13">P4</text>
+            <rect x="210" y="120" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="120" width="536.10" height="18" rx="8" fill="#a78bfa" />
+            <text x="762" y="134" fill="#e5e7eb" font-size="12">6,049 rows</text>
+            
+            <text x="0" y="169" fill="#cbd5e1" font-size="13">P5</text>
+            <rect x="210" y="154" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="154" width="490.72" height="18" rx="8" fill="#a78bfa" />
+            <text x="762" y="168" fill="#e5e7eb" font-size="12">5,537 rows</text>
+            
+            <text x="0" y="203" fill="#cbd5e1" font-size="13">P6</text>
+            <rect x="210" y="188" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="188" width="379.05" height="18" rx="8" fill="#a78bfa" />
+            <text x="762" y="202" fill="#e5e7eb" font-size="12">4,277 rows</text>
+            
+            <text x="0" y="237" fill="#cbd5e1" font-size="13">P7</text>
+            <rect x="210" y="222" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="222" width="212.88" height="18" rx="8" fill="#a78bfa" />
+            <text x="762" y="236" fill="#e5e7eb" font-size="12">2,402 rows</text>
+            
+            <text x="0" y="271" fill="#cbd5e1" font-size="13">P8</text>
+            <rect x="210" y="256" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="256" width="42.98" height="18" rx="8" fill="#a78bfa" />
+            <text x="762" y="270" fill="#e5e7eb" font-size="12">485 rows</text>
+            
+    </svg>
+    
+    </article>
+  </section>
+
+  <section class="grid two" style="margin-top: 16px;">
+    <article class="panel">
+      <h2>Top Plane Route Groups</h2>
+      
+    <svg viewBox="0 0 860 376" role="img" aria-label="bar chart">
+      
+            <text x="0" y="33" fill="#cbd5e1" font-size="13">south_to_north_military</text>
+            <rect x="210" y="18" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="18" width="540.00" height="18" rx="8" fill="#fb923c" />
+            <text x="762" y="32" fill="#e5e7eb" font-size="12">731 matches</text>
+            
+            <text x="0" y="67" fill="#cbd5e1" font-size="13">west_to_east_georgopol</text>
+            <rect x="210" y="52" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="52" width="529.66" height="18" rx="8" fill="#fb923c" />
+            <text x="762" y="66" fill="#e5e7eb" font-size="12">717 matches</text>
+            
+            <text x="0" y="101" fill="#cbd5e1" font-size="13">north_to_south_severny</text>
+            <rect x="210" y="86" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="86" width="508.97" height="18" rx="8" fill="#fb923c" />
+            <text x="762" y="100" fill="#e5e7eb" font-size="12">689 matches</text>
+            
+            <text x="0" y="135" fill="#cbd5e1" font-size="13">east_to_west</text>
+            <rect x="210" y="120" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="120" width="402.60" height="18" rx="8" fill="#fb923c" />
+            <text x="762" y="134" fill="#e5e7eb" font-size="12">545 matches</text>
+            
+            <text x="0" y="169" fill="#cbd5e1" font-size="13">southeast_to_northwest_military</text>
+            <rect x="210" y="154" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="154" width="379.70" height="18" rx="8" fill="#fb923c" />
+            <text x="762" y="168" fill="#e5e7eb" font-size="12">514 matches</text>
+            
+            <text x="0" y="203" fill="#cbd5e1" font-size="13">southwest_to_northeast_military</text>
+            <rect x="210" y="188" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="188" width="347.20" height="18" rx="8" fill="#fb923c" />
+            <text x="762" y="202" fill="#e5e7eb" font-size="12">470 matches</text>
+            
+            <text x="0" y="237" fill="#cbd5e1" font-size="13">northwest_to_southeast_georgopol</text>
+            <rect x="210" y="222" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="222" width="316.17" height="18" rx="8" fill="#fb923c" />
+            <text x="762" y="236" fill="#e5e7eb" font-size="12">428 matches</text>
+            
+            <text x="0" y="271" fill="#cbd5e1" font-size="13">northeast_to_southwest_yasnaya</text>
+            <rect x="210" y="256" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="256" width="279.23" height="18" rx="8" fill="#fb923c" />
+            <text x="762" y="270" fill="#e5e7eb" font-size="12">378 matches</text>
+            
+            <text x="0" y="305" fill="#cbd5e1" font-size="13">northwest_to_southeast_severny</text>
+            <rect x="210" y="290" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="290" width="200.19" height="18" rx="8" fill="#fb923c" />
+            <text x="762" y="304" fill="#e5e7eb" font-size="12">271 matches</text>
+            
+            <text x="0" y="339" fill="#cbd5e1" font-size="13">northeast_to_southwest_severny</text>
+            <rect x="210" y="324" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="324" width="198.71" height="18" rx="8" fill="#fb923c" />
+            <text x="762" y="338" fill="#e5e7eb" font-size="12">269 matches</text>
+            
+    </svg>
+    
+    </article>
+    <article class="panel">
+      <h2>Collection by Match Date</h2>
+      
+    <svg viewBox="0 0 860 512" role="img" aria-label="bar chart">
+      
+            <text x="0" y="33" fill="#cbd5e1" font-size="13">2026-06-05</text>
+            <rect x="210" y="18" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="18" width="380.80" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="32" fill="#e5e7eb" font-size="12">299 matches</text>
+            
+            <text x="0" y="67" fill="#cbd5e1" font-size="13">2026-06-06</text>
+            <rect x="210" y="52" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="52" width="249.62" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="66" fill="#e5e7eb" font-size="12">196 matches</text>
+            
+            <text x="0" y="101" fill="#cbd5e1" font-size="13">2026-06-07</text>
+            <rect x="210" y="86" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="86" width="491.60" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="100" fill="#e5e7eb" font-size="12">386 matches</text>
+            
+            <text x="0" y="135" fill="#cbd5e1" font-size="13">2026-06-08</text>
+            <rect x="210" y="120" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="120" width="403.73" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="134" fill="#e5e7eb" font-size="12">317 matches</text>
+            
+            <text x="0" y="169" fill="#cbd5e1" font-size="13">2026-06-09</text>
+            <rect x="210" y="154" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="154" width="198.68" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="168" fill="#e5e7eb" font-size="12">156 matches</text>
+            
+            <text x="0" y="203" fill="#cbd5e1" font-size="13">2026-06-10</text>
+            <rect x="210" y="188" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="188" width="540.00" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="202" fill="#e5e7eb" font-size="12">424 matches</text>
+            
+            <text x="0" y="237" fill="#cbd5e1" font-size="13">2026-06-11</text>
+            <rect x="210" y="222" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="222" width="313.30" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="236" fill="#e5e7eb" font-size="12">246 matches</text>
+            
+            <text x="0" y="271" fill="#cbd5e1" font-size="13">2026-06-12</text>
+            <rect x="210" y="256" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="256" width="426.65" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="270" fill="#e5e7eb" font-size="12">335 matches</text>
+            
+            <text x="0" y="305" fill="#cbd5e1" font-size="13">2026-06-13</text>
+            <rect x="210" y="290" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="290" width="245.80" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="304" fill="#e5e7eb" font-size="12">193 matches</text>
+            
+            <text x="0" y="339" fill="#cbd5e1" font-size="13">2026-06-14</text>
+            <rect x="210" y="324" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="324" width="515.80" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="338" fill="#e5e7eb" font-size="12">405 matches</text>
+            
+            <text x="0" y="373" fill="#cbd5e1" font-size="13">2026-06-15</text>
+            <rect x="210" y="358" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="358" width="340.05" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="372" fill="#e5e7eb" font-size="12">267 matches</text>
+            
+            <text x="0" y="407" fill="#cbd5e1" font-size="13">2026-06-16</text>
+            <rect x="210" y="392" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="392" width="221.60" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="406" fill="#e5e7eb" font-size="12">174 matches</text>
+            
+            <text x="0" y="441" fill="#cbd5e1" font-size="13">2026-06-17</text>
+            <rect x="210" y="426" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="426" width="388.44" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="440" fill="#e5e7eb" font-size="12">305 matches</text>
+            
+            <text x="0" y="475" fill="#cbd5e1" font-size="13">2026-06-18</text>
+            <rect x="210" y="460" width="540" height="18" rx="8" fill="rgba(148,163,184,0.13)" />
+            <rect x="210" y="460" width="355.33" height="18" rx="8" fill="#60a5fa" />
+            <text x="762" y="474" fill="#e5e7eb" font-size="12">279 matches</text>
+            
+    </svg>
+    
+    </article>
+  </section>
+
+  <section class="panel" style="margin-top: 16px;">
+    <h2>Top Route Group P1 Summary</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Route group</th>
+          <th>Matches</th>
+          <th>Avg P1 X</th>
+          <th>Avg P1 Y</th>
+          <th>Avg P1 Radius</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+            <tr>
+              <td>south_to_north_military</td>
+              <td>731</td>
+              <td>406,869</td>
+              <td>397,875</td>
+              <td>202,633</td>
+            </tr>
+            
+
+            <tr>
+              <td>west_to_east_georgopol</td>
+              <td>717</td>
+              <td>390,482</td>
+              <td>390,924</td>
+              <td>202,661</td>
+            </tr>
+            
+
+            <tr>
+              <td>north_to_south_severny</td>
+              <td>689</td>
+              <td>414,469</td>
+              <td>382,397</td>
+              <td>202,500</td>
+            </tr>
+            
+
+            <tr>
+              <td>east_to_west</td>
+              <td>545</td>
+              <td>411,383</td>
+              <td>408,267</td>
+              <td>202,440</td>
+            </tr>
+            
+
+            <tr>
+              <td>southeast_to_northwest_military</td>
+              <td>514</td>
+              <td>400,535</td>
+              <td>423,214</td>
+              <td>202,386</td>
+            </tr>
+            
+
+            <tr>
+              <td>southwest_to_northeast_military</td>
+              <td>470</td>
+              <td>411,219</td>
+              <td>416,504</td>
+              <td>202,709</td>
+            </tr>
+            
+
+            <tr>
+              <td>northwest_to_southeast_georgopol</td>
+              <td>428</td>
+              <td>363,724</td>
+              <td>396,840</td>
+              <td>202,693</td>
+            </tr>
+            
+
+            <tr>
+              <td>northeast_to_southwest_yasnaya</td>
+              <td>378</td>
+              <td>463,014</td>
+              <td>384,558</td>
+              <td>202,930</td>
+            </tr>
+            
+
+            <tr>
+              <td>northwest_to_southeast_severny</td>
+              <td>271</td>
+              <td>465,555</td>
+              <td>362,411</td>
+              <td>202,239</td>
+            </tr>
+            
+
+            <tr>
+              <td>northeast_to_southwest_severny</td>
+              <td>269</td>
+              <td>356,714</td>
+              <td>367,630</td>
+              <td>202,661</td>
+            </tr>
+            
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel" style="margin-top: 16px;">
+    <h2>해석</h2>
+    <div class="note">
+      현재 결과는 <code>random-forest</code> 모델 기준입니다. Windows 로컬 학습에서는 <code>--jobs -1</code>보다 <code>--jobs 1</code>이 안정적으로 완료되었습니다. 중심 좌표 MAE는 약 205.48m, 반경 MAE는 약 4.06m입니다. 반경은 단순 baseline보다 개선됐지만 중심 좌표 MAE는 baseline과 차이가 작습니다. 다음 개선 포인트는 비행기 동선 추정 로직 정제, route feature 보강, P1 기준 위치/섬 여부/육지 마스크 같은 공간 feature 추가입니다.
+    </div>
+  </section>
+
+  
+    <section class="panel" style="margin-top: 16px;">
+      <h2>Phase 1 Prediction Map - 비행기 경로만 보고 1페이즈 예측</h2>
+      <p>
+        비행기 경로/route group만 입력으로 사용해서 P1 첫 자기장 위치를 예측하고,
+        실제 P1 서클과 지도 위에서 비교했습니다.
+      </p>
+      <div class="legend-row">
+        <span class="pill"><span class="legend-dot" style="background:#00d2ff;"></span>실제 P1 서클</span>
+        <span class="pill"><span class="legend-dot" style="background:#ff3250;"></span>예측 P1 서클</span>
+        <span class="pill">중심 오차: 719.70 m</span>
+        <span class="pill">반경 오차: 107.79 m</span>
+        <span class="pill">model: phase1_random_forest_route_only</span>
+        <span class="pill">route: southwest_to_northeast_georgopol</span>
+      </div>
+      <div class="map-wrap">
+        <img class="map-image" src="phase1_prediction_map_latest.png" alt="Erangel phase 1 prediction result">
+      </div>
+      <p>
+        Match ID: <code>4468518b-f740-4e25-81d5-bf1c6892b677</code><br>
+        빨간 원이 예측한 1페이즈, 하늘색 원이 실제 1페이즈입니다.
+      </p>
+    </section>
+    
+
+  
+    <section class="panel" style="margin-top: 16px;">
+      <h2>Transition Prediction Map - P1에서 P2 예측</h2>
+      <p>
+        최신 유효 match 하나를 골라 P1 입력 기준으로
+        P2 자기장을 예측하고, 에란겔 지도 위에 표시했습니다.
+      </p>
+      <div class="legend-row">
+        <span class="pill"><span class="legend-dot" style="background:#f8fafc;"></span>현재 서클</span>
+        <span class="pill"><span class="legend-dot" style="background:#00d2ff;"></span>실제 다음 서클</span>
+        <span class="pill"><span class="legend-dot" style="background:#ff3250;"></span>예측 다음 서클</span>
+        <span class="pill">중심 오차: 660.74 m</span>
+        <span class="pill">반경 오차: 56.43 m</span>
+        <span class="pill">route: southwest_to_northeast_georgopol</span>
+      </div>
+      <div class="map-wrap">
+        <img class="map-image" src="prediction_map_latest.png" alt="Erangel map prediction result">
+      </div>
+      <p>
+        Match ID: <code>4468518b-f740-4e25-81d5-bf1c6892b677</code><br>
+        예측 원은 빨간색, 실제 다음 원은 하늘색입니다. 두 중심을 잇는 흰 선이 중심 오차입니다.
+      </p>
+    </section>
+    
+</main>
+</body>
+</html>

@@ -17,6 +17,7 @@ pubg-circle-auto = "circle_train.auto_collect:main"
 pubg-circle-train = "circle_train.train:main"
 pubg-circle-predict = "circle_train.predict:main"
 pubg-circle-visualize = "circle_train.visualize:main"
+pubg-circle-dashboard = "circle_train.dashboard:main"
 
 [build-system]
 requires = ["setuptools>=68"]

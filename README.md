@@ -143,6 +143,28 @@ py -m circle_train.analysis route-summary
 
 결과는 `data/processed`에 저장됩니다.
 
+## 모델 학습 및 대시보드
+
+현재 누적된 `match_sequences.csv` 기준으로 phase별 자기장 transition 모델을 학습합니다.
+
+```powershell
+py -m circle_train.train --jobs 1
+```
+
+학습 결과 대시보드는 다음 명령으로 생성합니다.
+
+```powershell
+py -m circle_train.dashboard
+```
+
+생성 결과:
+
+```text
+data/models/circle_transition_model.pkl
+data/models/circle_transition_metrics.json
+data/dashboard/training_dashboard.html
+```
+
 ### 1000개/day 목표 기준
 
 현재 GitHub Actions schedule은 하루 4회 실행됩니다.

@@ -1,84 +1,84 @@
 {
-  "train_rows": 22444,
-  "test_rows": 5664,
-  "train_matches": 3729,
-  "test_matches": 932,
-  "train_center_mae_m": 181.0006476215609,
-  "train_center_rmse_m": 263.2512645059332,
-  "train_radius_mae_m": 0.9241138122754289,
-  "train_radius_rmse_m": 3.8375735123223795,
-  "test_center_mae_m": 205.61146541443642,
-  "test_center_rmse_m": 296.874007506381,
-  "test_radius_mae_m": 0.9089282588778522,
-  "test_radius_rmse_m": 3.817046794459866,
+  "train_rows": 29525,
+  "test_rows": 7491,
+  "train_matches": 4875,
+  "test_matches": 1218,
+  "train_center_mae_m": 179.33046649972422,
+  "train_center_rmse_m": 261.1740861359517,
+  "train_radius_mae_m": 3.8135807565700324,
+  "train_radius_rmse_m": 8.850235444138667,
+  "test_center_mae_m": 205.4754923304937,
+  "test_center_rmse_m": 298.2298181234857,
+  "test_radius_mae_m": 4.0570577785775015,
+  "test_radius_rmse_m": 9.43915600901056,
   "baselines": {
     "current_center": {
-      "center_mae_m": 205.96179154498716,
-      "center_rmse_m": 297.50069424007313,
-      "radius_mae_m": 324.8410882745372,
-      "radius_rmse_m": 439.37850749349695
+      "center_mae_m": 205.2357075856453,
+      "center_rmse_m": 297.3612497536761,
+      "radius_mae_m": 318.8618831035824,
+      "radius_rmse_m": 433.80953050930816
     },
     "phase_mean_delta": {
-      "center_mae_m": 205.94611284047645,
-      "center_rmse_m": 297.4237997760699,
-      "radius_mae_m": 7.232668695064563,
-      "radius_rmse_m": 15.274453249123834
+      "center_mae_m": 205.2223362127539,
+      "center_rmse_m": 297.30423064419244,
+      "radius_mae_m": 14.012946823171152,
+      "radius_rmse_m": 20.919506253215317
     },
     "phase_route_mean_delta": {
-      "center_mae_m": 206.92965114713158,
-      "center_rmse_m": 299.4894697915162,
-      "radius_mae_m": 6.418821320365261,
-      "radius_rmse_m": 14.443617525977814
+      "center_mae_m": 205.88722917207843,
+      "center_rmse_m": 298.90473037277513,
+      "radius_mae_m": 13.4485087630716,
+      "radius_rmse_m": 20.70935032547524
     }
   },
   "test_by_phase": {
     "1": {
-      "center_mae_m": 565.9226872212947,
-      "center_rmse_m": 613.8013798831512,
-      "radius_mae_m": 1.7299652099609376e-05,
-      "radius_rmse_m": 1.7299652099609376e-05
+      "center_mae_m": 580.9974360654215,
+      "center_rmse_m": 623.5810115740954,
+      "radius_mae_m": 11.116092374294386,
+      "radius_rmse_m": 19.0065376713566
     },
     "2": {
-      "center_mae_m": 284.85510365384124,
-      "center_rmse_m": 306.543018636751,
-      "radius_mae_m": 5.245208740234375e-06,
-      "radius_rmse_m": 5.245208740234375e-06
+      "center_mae_m": 285.78464607911735,
+      "center_rmse_m": 306.21688332304024,
+      "radius_mae_m": 5.4636961624389455,
+      "radius_rmse_m": 9.348450368427219
     },
     "3": {
-      "center_mae_m": 196.06117124443642,
-      "center_rmse_m": 209.1067729600712,
-      "radius_mae_m": 5.5356402886968965,
-      "radius_rmse_m": 9.419929060105808
+      "center_mae_m": 197.42638409134287,
+      "center_rmse_m": 210.43874519634227,
+      "radius_mae_m": 6.285526359661774,
+      "radius_rmse_m": 9.466419238354854
     },
     "4": {
-      "center_mae_m": 121.13140685596183,
-      "center_rmse_m": 129.12959824902558,
-      "radius_mae_m": 2.013826010943229e-06,
-      "radius_rmse_m": 3.964474531567372e-06
+      "center_mae_m": 114.658818541911,
+      "center_rmse_m": 124.09663536879037,
+      "radius_mae_m": 1.04965099243355,
+      "radius_rmse_m": 2.4581256901764936
     },
     "5": {
-      "center_mae_m": 59.80668607534601,
-      "center_rmse_m": 64.11280456517302,
-      "radius_mae_m": 1.030376493292955e-06,
-      "radius_rmse_m": 2.0734348133300975e-06
+      "center_mae_m": 60.2946446853722,
+      "center_rmse_m": 64.22468159460387,
+      "radius_mae_m": 0.7514036679873725,
+      "radius_rmse_m": 1.752921668743259
     },
     "6": {
-      "center_mae_m": 31.792967521761884,
-      "center_rmse_m": 34.25022770282814,
-      "radius_mae_m": 5.498510418516216e-07,
-      "radius_rmse_m": 1.0723602297943313e-06
+      "center_mae_m": 32.38160276679593,
+      "center_rmse_m": 34.74761845442066,
+      "radius_mae_m": 0.4913954515795373,
+      "radius_rmse_m": 1.1111406296036062
     },
     "7": {
-      "center_mae_m": 14.273811480564397,
-      "center_rmse_m": 15.579815027661946,
-      "radius_mae_m": 2.0109927716032832e-07,
-      "radius_rmse_m": 2.929737868696793e-07
+      "center_mae_m": 15.836160161214138,
+      "center_rmse_m": 17.211603651555535,
+      "radius_mae_m": 6.727597704439452e-07,
+      "radius_rmse_m": 1.407468785238087e-06
     },
     "8": {
       "center_mae_m": 0.0,
       "center_rmse_m": 0.0,
-      "radius_mae_m": 1.2728560250252485e-09,
-      "radius_rmse_m": 1.7953632043107338e-09
+      "radius_mae_m": 1.849656525467123e-09,
+      "radius_rmse_m": 2.4083954629680933e-09
     }
   },
   "input": "F:\\coding\\PUBG-Erangel-Circle-Predictor\\data\\processed\\match_sequences.csv",
